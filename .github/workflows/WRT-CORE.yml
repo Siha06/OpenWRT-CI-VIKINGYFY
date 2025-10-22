@@ -43,6 +43,9 @@ on:
       WRT_USB:
         required: false
         type: string
+      UPLOAD_FIRMWARE:
+        required: false
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
