@@ -65,3 +65,5 @@ jobs:
       WRT_TEST: ${{inputs.TEST}}
       #加入USB相关驱动
       WRT_USB: ${{inputs.USB}}
+      #上传到Artifact
+      UPLOAD_FIRMWARE: true
