@@ -59,6 +59,7 @@ env:
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
   WRT_USB: ${{inputs.WRT_USB}}
+  UPLOAD_FIRMWARE: ${{inputs.UPLOAD_FIRMWARE}}
 
 jobs:
   core:
