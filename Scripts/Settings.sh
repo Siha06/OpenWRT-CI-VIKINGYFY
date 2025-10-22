@@ -1,11 +1,30 @@
-#!/bin/bash
+IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
+#mv $GITHUB_WORKSPACE/patch/998-ipq.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
+mv $GITHUB_WORKSPACE/patch/998-$IPQ_TARGET.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
+
+rm -rf .vermagic
+mv $GITHUB_WORKSPACE/vm/vikingyfy-$IPQ_TARGET vermagic
+sed -i '130d' include/kernel-defaults.mk
+sed -i '130i\\tcp $(TOPDIR)/vermagic $(LINUX_DIR)/.vermagic' include/kernel-defaults.mk
+sed -i '30d' package/kernel/linux/Makefile
+sed -i '30i\  STAMP_BUILT:=$(STAMP_BUILT)_$(shell cat $(LINUX_DIR)/.vermagic)' package/kernel/linux/Makefile
+
+if grep -q "openclash=y" .config; then
+    git clone --depth 1 -b core https://github.com/vernesong/OpenClash.git  package/openclash-core
+    tar -zxf package/openclash-core/master/meta/clash-linux-arm64.tar.gz -C package/base-files/files/etc/
+    mv package/base-files/files/etc/clash package/base-files/files/etc/my-clash
+    rm -rf package/openclash-core
+fi
 
 #修改默认主题
-sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+#sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 #修改immortalwrt.lan关联IP
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 #添加编译日期标识
-sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_MARK-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+sed -i "s/+ ' \/ ' : '') + (luciversion ||/:/g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+sed -i "s/%C/\/ Complied on $(date +"%Y.%m.%d")/g" package/base-files/files/usr/lib/os-release
+sed -i "s/%C/\/ Complied on $(date +"%Y.%m.%d")/g" package/base-files/files/etc/openwrt_release
+#sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_MARK-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 
 WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh" 2>/dev/null)
 WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
@@ -13,12 +32,12 @@ if [ -f "$WIFI_SH" ]; then
 	#修改WIFI名称
 	sed -i "s/BASE_SSID='.*'/BASE_SSID='$WRT_SSID'/g" $WIFI_SH
 	#修改WIFI密码
-	sed -i "s/BASE_WORD='.*'/BASE_WORD='$WRT_WORD'/g" $WIFI_SH
+	sed -i "s/BASE_WORD='.*'/BASE_WORD='$WRT_WIFI_PW'/g" $WIFI_SH
 elif [ -f "$WIFI_UC" ]; then
 	#修改WIFI名称
 	sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
 	#修改WIFI密码
-	sed -i "s/key='.*'/key='$WRT_WORD'/g" $WIFI_UC
+	sed -i "s/key='.*'/key='$WRT_WIFI_PW'/g" $WIFI_UC
 	#修改WIFI地区
 	sed -i "s/country='.*'/country='CN'/g" $WIFI_UC
 	#修改WIFI加密
@@ -35,12 +54,12 @@ sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
 echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
-echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
+#echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #手动调整的插件
-if [ -n "$WRT_PACKAGE" ]; then
-	echo -e "$WRT_PACKAGE" >> ./.config
-fi
+#if [ -n "$WRT_PACKAGE" ]; then
+#	echo -e "$WRT_PACKAGE" >> ./.config
+#fi
 
 #高通平台调整
 DTS_PATH="./target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/"
@@ -49,7 +68,7 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 	echo "CONFIG_FEED_nss_packages=n" >> ./.config
 	echo "CONFIG_FEED_sqm_scripts_nss=n" >> ./.config
 	#开启sqm-nss插件
-	echo "CONFIG_PACKAGE_luci-app-sqm=y" >> ./.config
+	#echo "CONFIG_PACKAGE_luci-app-sqm=y" >> ./.config
 	echo "CONFIG_PACKAGE_sqm-scripts-nss=y" >> ./.config
 	#设置NSS版本
 	echo "CONFIG_NSS_FIRMWARE_VERSION_11_4=n" >> ./.config
