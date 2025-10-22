@@ -189,12 +189,13 @@ jobs:
           make download -j$(nproc)
 
       - name: Compile Firmware
-        id: compile
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
           make -j$(nproc) || make -j1 V=s
+
+          echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Machine Information
         run: |
@@ -233,7 +234,7 @@ jobs:
           fi
 
       - name: Upload Firmware To Artifact(将固件上传到Artifact)
-        if: steps.compile.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true'
+        if: env.UPLOAD_FIRMWARE == 'true'
         uses: actions/upload-artifact@main
         with:
           name: ${{env.WRT_CONFIG}}-${{env.WRT_INFO}}-${{env.WRT_DATE_FULL}}
