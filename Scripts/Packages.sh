@@ -6,7 +6,7 @@ git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/l
 rm -rf feeds/packages/net/{adguardhome,smartdns}
 rm -rf feeds/luci/applications/{luci-app-adguardhome,luci-app-smartdns}
 git clone --depth 1 https://github.com/kenzok8/small-package.git package/small-package
-mv package/small-package/adguardhome feeds/packages/net/adguardhome
+mv package/small-package/adguardhome package/adguardhome
 mv package/small-package/luci-app-adguardhome package/luci-app-adguardhome
 mv package/small-package/luci-app-easymesh package/luci-app-easymesh
 mv package/small-package/luci-app-ikoolproxy package/luci-app-ikoolproxy
