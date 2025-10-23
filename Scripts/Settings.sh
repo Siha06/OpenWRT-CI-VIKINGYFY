@@ -1,7 +1,6 @@
 IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
 #mv $GITHUB_WORKSPACE/patch/998-ipq.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
 
-
 rm -rf .vermagic
 if grep -q "luci-app-store=y" .config; then
     mv $GITHUB_WORKSPACE/vm/vikingyfy-istore vermagic
@@ -15,6 +14,12 @@ sed -i '130i\\tcp $(TOPDIR)/vermagic $(LINUX_DIR)/.vermagic' include/kernel-defa
 sed -i '30d' package/kernel/linux/Makefile
 sed -i '30i\  STAMP_BUILT:=$(STAMP_BUILT)_$(shell cat $(LINUX_DIR)/.vermagic)' package/kernel/linux/Makefile
 
+
+git clone --depth 1 -b main https://github.com/linkease/istore.git package/istore
+git clone --depth 1 -b master https://github.com/linkease/nas-packages.git package/nas-packages
+git clone --depth 1 -b main https://github.com/linkease/nas-packages-luci.git package/nas-luci
+mv package/nas-packages/network/services/* package/nas-packages/
+rm -rf package/nas-packages/network
 if grep -q "openclash=y" .config; then
     git clone --depth 1 -b core https://github.com/vernesong/OpenClash.git  package/openclash-core
     tar -zxf package/openclash-core/master/meta/clash-linux-arm64.tar.gz -C package/base-files/files/etc/
