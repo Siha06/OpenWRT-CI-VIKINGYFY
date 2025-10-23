@@ -30,6 +30,11 @@ git clone --depth 1 https://github.com/nikkinikki-org/OpenWrt-nikki.git package/
 rm -rf feeds/packages/net/{open-app-filter}
 git clone --depth 1 https://github.com/sbwml/luci-app-openlist2 package/openlist2
 
+git clone --depth 1 -b main https://github.com/linkease/istore.git package/istore
+git clone --depth 1 -b master https://github.com/linkease/nas-packages.git package/nas-packages
+git clone --depth 1 -b main https://github.com/linkease/nas-packages-luci.git package/nas-luci
+mv package/nas-packages/network/services/* package/nas-packages/
+rm -rf package/nas-packages/network
 
 #安装和更新软件包
 UPDATE_PACKAGE() {
