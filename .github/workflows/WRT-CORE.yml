@@ -243,7 +243,7 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{env.WRT_CONFIG}} based on ${{env.WRT_INFO}}
+          tag_name: ${{env.WRT_CONFIG}}-based-on-${{env.WRT_INFO}}
           files: ./wrt/upload/*.*
           body: |
 
