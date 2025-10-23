@@ -173,6 +173,10 @@ jobs:
           cd ./wrt/
           cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
 
+          if grep -q "luci-app-store=y" .config; then
+            cat $GITHUB_WORKSPACE/Config/IPK.txt >> .config            
+          fi
+
           if [ "$WRT_USB" = "true" ]; then
             cat $GITHUB_WORKSPACE/Config/ADD-USB.txt >> .config            
           fi
