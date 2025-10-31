@@ -200,8 +200,6 @@ jobs:
 
           make -j$(nproc) || make -j1 V=s
 
-          echo "status=success" >> $GITHUB_OUTPUT
-
       - name: Machine Information
         run: |
           cd ./wrt/
