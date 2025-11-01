@@ -6,7 +6,7 @@ sed -i '/nss/d' /etc/opkg/distfeeds.conf
 sed -i '/sqm/d' /etc/opkg/distfeeds.conf
 sed -i '/qualcommax/d' /etc/opkg/distfeeds.conf
 echo > /etc/opkg/distfeeds.conf
-sed -i '$a src/gz openwrt_core https://dl.openwrt.ai/releases/24.10/targets/qualcommax/ipq60xx/6.12.51' /etc/opkg/distfeeds.conf
+sed -i '$a src/gz openwrt_core https://dl.openwrt.ai/releases/24.10/targets/qualcommax/ipq60xx/6.12.55' /etc/opkg/distfeeds.conf
 sed -i '$a src/gz openwrt_base https://mirrors.pku.edu.cn/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/base' /etc/opkg/distfeeds.conf
 sed -i '$a src/gz openwrt_luci https://mirrors.pku.edu.cn/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/luci' /etc/opkg/distfeeds.conf
 sed -i '$a src/gz openwrt_packages https://mirrors.pku.edu.cn/openwrt/releases/24.10-SNAPSHOT/packages/aarch64_cortex-a53/packages' /etc/opkg/distfeeds.conf
