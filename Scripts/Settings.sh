@@ -15,11 +15,11 @@ sed -i '30d' package/kernel/linux/Makefile
 sed -i '30i\  STAMP_BUILT:=$(STAMP_BUILT)_$(shell cat $(LINUX_DIR)/.vermagic)' package/kernel/linux/Makefile
 
 
-mkdir -p package/base-files/files/etc/openclash/core
+#mkdir -p package/base-files/files/etc/openclash/core
 if grep -q "openclash=y" "$GITHUB_WORKSPACE/$CONFIG_FILE"; then
     git clone --depth 1 -b core https://github.com/vernesong/OpenClash.git  package/openclash-core
     tar -zxf package/openclash-core/master/meta/clash-linux-arm64.tar.gz -C package/base-files/files/etc/
-    mv package/base-files/files/etc/clash package/base-files/files/etc/openclash/core/clash_meta
+    mv package/base-files/files/etc/clash package/base-files/files/etc/clash_meta
     rm -rf package/openclash-core
 fi
 
