@@ -21,8 +21,8 @@ if grep -q "openclash=y" "$GITHUB_WORKSPACE/$CONFIG_FILE"; then
     wget -qO- $META_URL | tar xOvz > package/base-files/files/etc/openclash/core/clash_meta
     chmod +x package/base-files/files/etc/openclash/core/clash_meta
     # Download GeoIP and GeoSite
-    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O package/base-files/files/etc/openclash/GeoIP.dat
-    wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O package/base-files/files/etc/openclash/GeoSite.dat
+    # wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O package/base-files/files/etc/openclash/GeoIP.dat
+    # wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O package/base-files/files/etc/openclash/GeoSite.dat
 fi
 
 #修改默认主题
