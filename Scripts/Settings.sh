@@ -1,5 +1,5 @@
+mv $GITHUB_WORKSPACE/patch/997-mac.sh package/base-files/files/etc/uci-defaults/997-mac.sh
 IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
-#mv $GITHUB_WORKSPACE/patch/998-ipq.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
 
 rm -rf .vermagic
 if grep -Eq "luci-app-(store|kwrt)=y" .config; then
@@ -14,16 +14,6 @@ sed -i '130i\\tcp $(TOPDIR)/vermagic $(LINUX_DIR)/.vermagic' include/kernel-defa
 sed -i '30d' package/kernel/linux/Makefile
 sed -i '30i\  STAMP_BUILT:=$(STAMP_BUILT)_$(shell cat $(LINUX_DIR)/.vermagic)' package/kernel/linux/Makefile
 
-
-if grep -q "openclash=y" "$GITHUB_WORKSPACE/$CONFIG_FILE"; then
-    mkdir -p package/base-files/files/etc/openclash/core
-    META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
-    wget -qO- $META_URL | tar xOvz > package/base-files/files/etc/openclash/core/clash_meta
-    chmod +x package/base-files/files/etc/openclash/core/clash_meta
-    # Download GeoIP and GeoSite
-    # wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O package/base-files/files/etc/openclash/GeoIP.dat
-    # wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O package/base-files/files/etc/openclash/GeoSite.dat
-fi
 
 #修改默认主题
 #sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
