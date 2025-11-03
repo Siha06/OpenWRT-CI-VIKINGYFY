@@ -74,9 +74,6 @@ start() {
     NEW_MAC_5="${selected_prefix}${random_suffix_5}"
 
 
-    # 修改 lan的 mac
-	# uci set network.cfg060f15.macaddr="$NEW_MAC_0"
-    uci set network.cfg030f15.macaddr="$NEW_MAC_0"
 	# 修改 wan的 mac
 	# uci set network.cfg070f15.macaddr="$NEW_MAC_1"
     uci add network device
