@@ -1,3 +1,40 @@
+#!/bin/bash
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+
+rm -rf feeds/packages/net/{adguardhome,smartdns}
+rm -rf feeds/luci/applications/{luci-app-adguardhome,luci-app-smartdns}
+git clone --depth 1 https://github.com/kenzok8/small-package.git package/small-package
+mv package/small-package/adguardhome package/adguardhome
+mv package/small-package/luci-app-adguardhome package/luci-app-adguardhome
+mv package/small-package/luci-app-easymesh package/luci-app-easymesh
+mv package/small-package/luci-app-ikoolproxy package/luci-app-ikoolproxy
+mv package/small-package/lucky package/lucky
+mv package/small-package/luci-app-lucky package/luci-app-lucky
+mv package/small-package/luci-app-pushbot package/luci-app-pushbot
+mv package/small-package/wrtbwmon package/wrtbwmon
+mv package/small-package/luci-app-wrtbwmon package/luci-app-wrtbwmon
+rm -rf package/small-package
+
+rm -rf feeds/packages/net/{mosdns,v2ray-geodata}
+rm -rf feeds/luci/applications/{luci-app-openclash,luci-app-passwall,luci-app-ssr-plus,luci-app-mosdns}
+git clone --depth 1 https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+git clone --depth 1 https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+git clone --depth 1 https://github.com/vernesong/OpenClash.git  package/openclash
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
+git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2.git package/luci-app-passwall2
+git clone --depth 1 https://github.com/nikkinikki-org/OpenWrt-momo.git package/OpenWrt-momo
+git clone --depth 1 https://github.com/nikkinikki-org/OpenWrt-nikki.git package/OpenWrt-nikki
+
+rm -rf feeds/packages/net/{open-app-filter}
+git clone --depth 1 https://github.com/sbwml/luci-app-openlist2 package/openlist2
+
+git clone --depth 1 -b main https://github.com/linkease/istore.git package/istore
+git clone --depth 1 -b master https://github.com/linkease/nas-packages.git package/nas-packages
+git clone --depth 1 -b main https://github.com/linkease/nas-packages-luci.git package/nas-luci
+mv package/nas-packages/network/services/* package/nas-packages/
+rm -rf package/nas-packages/network
+
 #mv $GITHUB_WORKSPACE/patch/997-mac.sh package/base-files/files/etc/uci-defaults/997-mac.sh
 #mv $GITHUB_WORKSPACE/patch/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
@@ -29,6 +66,8 @@ else
     echo "⚪️ 未选择 luci-app-openclash"
 fi
 
+
+########################################################################################################################################
 #修改默认主题
 #sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 #修改immortalwrt.lan关联IP
