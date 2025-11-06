@@ -1,0 +1,24 @@
+if grep -q "openclash=y" .config; then
+    echo "✅ 已选择 luci-app-openclash，添加 openclash core"
+    mkdir -p files/etc/openclash/core
+    META_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
+    wget -qO- $META_URL | tar xOvz > files/etc/openclash/core/clash_meta
+    chmod +x files/etc/openclash/core/clash_meta
+    # wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat -O files/etc/openclash/GeoIP.dat
+    # wget -q https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O files/etc/openclash/GeoSite.dat
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs files/etc/openclash/rule_provider/category-ads-all_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.mrs files/etc/openclash/rule_provider/bilibili_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs files/etc/openclash/rule_provider/private_ip
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs files/etc/openclash/rule_provider/private_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs files/etc/openclash/rule_provider/cn_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs files/etc/openclash/rule_provider/cn_ip
+
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs files/etc/openclash/rule_provider/category-ai-!cn_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs files/etc/openclash/rule_provider/google_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs files/etc/openclash/rule_provider/google_ip
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs files/etc/openclash/rule_provider/netflix_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs files/etc/openclash/rule_provider/tiktok_domain
+    wget -qO https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs files/etc/openclash/rule_provider/geolocation-!cn_domain
+else
+    echo "⚪️ 未选择 luci-app-openclash"
+fi
