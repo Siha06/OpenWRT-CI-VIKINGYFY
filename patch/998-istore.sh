@@ -30,8 +30,13 @@ uci set wireless.default_radio1.ssid=WiFi-$(cat /sys/class/ieee80211/phy0/macadd
 uci set wireless.radio1.txpower='20'
 uci commit wireless
 
+uci set network.usbwan=interface
+uci set network.usbwan.proto='dhcp'
+#uci set network.usbwan.device='eth0'
+uci add_list firewall.cfg03dc81.network='usbwan'
+uci commit network
 uci commit
-cp /etc/clash_meta /etc/openclash/core/clash_meta
+#cp /etc/my-clash /etc/openclash/core/clash_meta
 
 #不用重启network，源码自带
 exit 0
