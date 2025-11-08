@@ -1,5 +1,12 @@
 #!/bin/bash
-
+uci del dhcp.lan.ra
+uci del dhcp.lan.ra_default
+uci del dhcp.lan.ra_flags
+uci del dhcp.lan.max_preferred_lifetime
+uci del dhcp.lan.max_valid_lifetime
+uci del dhcp.wan6
+uci del network.lan.ip6assign
+uci del network.wan6
 
 
 
