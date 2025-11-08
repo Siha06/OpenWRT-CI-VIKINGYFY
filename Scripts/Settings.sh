@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #mv $GITHUB_WORKSPACE/patch/997-mac.sh package/base-files/files/etc/uci-defaults/997-mac.sh
-mv $GITHUB_WORKSPACE/patch/997-mac2.sh package/base-files/files/etc/uci-defaults/997-mac2.sh
-mv $GITHUB_WORKSPACE/patch/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+#mv $GITHUB_WORKSPACE/patch/997-mac2.sh package/base-files/files/etc/uci-defaults/997-mac2.sh
+#mv $GITHUB_WORKSPACE/patch/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
 
 rm -rf .vermagic
