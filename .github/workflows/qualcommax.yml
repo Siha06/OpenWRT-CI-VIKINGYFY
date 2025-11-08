@@ -55,8 +55,8 @@ jobs:
       WRT_IP: 192.168.5.1
       #登录密码，仅作提示，修改无用
       WRT_LOGIN_PW: 无
-      #源码链接
-      WRT_REPO: https://github.com/VIKINGYFY/immortalwrt.git
+      #源码链接VIKINGYFY/immortalwrt.git
+      WRT_REPO: https://github.com/Siha06/immortalwrt-VIKINGYFY.git
       #源码分支
       WRT_BRANCH: main
       #源码名称
