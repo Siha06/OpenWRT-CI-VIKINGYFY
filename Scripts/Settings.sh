@@ -1,4 +1,18 @@
 #!/bin/bash
+
+mv $GITHUB_WORKSPACE/patch/997-mac.sh package/base-files/files/etc/uci-defaults/997-mac.sh
+mv $GITHUB_WORKSPACE/patch/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
+
+rm -rf .vermagic
+if grep -Eq "luci-app-(store|kwrt)=y" .config; then
+    mv $GITHUB_WORKSPACE/vm/vikingyfy-istore vermagic
+	mv $GITHUB_WORKSPACE/patch/998-istore.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
+else
+    mv $GITHUB_WORKSPACE/vm/vikingyfy-$IPQ_TARGET vermagic
+	mv $GITHUB_WORKSPACE/patch/998-$IPQ_TARGET.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
+fi
+
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
@@ -35,18 +49,7 @@ git clone --depth 1 -b main https://github.com/linkease/nas-packages-luci.git pa
 mv package/nas-packages/network/services/* package/nas-packages/
 rm -rf package/nas-packages/network
 
-#mv $GITHUB_WORKSPACE/patch/997-mac.sh package/base-files/files/etc/uci-defaults/997-mac.sh
-#mv $GITHUB_WORKSPACE/patch/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
-IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
 
-rm -rf .vermagic
-if grep -Eq "luci-app-(store|kwrt)=y" .config; then
-    mv $GITHUB_WORKSPACE/vm/vikingyfy-istore vermagic
-	mv $GITHUB_WORKSPACE/patch/998-istore.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
-else
-    mv $GITHUB_WORKSPACE/vm/vikingyfy-$IPQ_TARGET vermagic
-	mv $GITHUB_WORKSPACE/patch/998-$IPQ_TARGET.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
-fi
 sed -i '130d' include/kernel-defaults.mk
 sed -i '130i\\tcp $(TOPDIR)/vermagic $(LINUX_DIR)/.vermagic' include/kernel-defaults.mk
 sed -i '30d' package/kernel/linux/Makefile
