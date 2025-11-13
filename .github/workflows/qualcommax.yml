@@ -46,13 +46,13 @@ jobs:
       #默认主题
       WRT_THEME: bootstrap
       #默认主机名OpenWrt-Chuhai
-      WRT_NAME: OpenWrt
+      WRT_NAME: Chuhai
       #默认WIFI名称
       WRT_SSID: OpenWrt
       #默认WIFI密码
       WRT_WIFI_PW: password
       #默认地址10.3.2.1##192.168.5.1
-      WRT_IP: 10.3.2.1
+      WRT_IP: 192.168.5.1
       #登录密码，仅作提示，修改无用
       WRT_LOGIN_PW: 无
       #源码链接VIKINGYFY/immortalwrt.git
