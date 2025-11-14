@@ -1,8 +1,5 @@
 #!/bin/bash
-mv $GITHUB_WORKSPACE/patch/xy/footer.ut feeds/luci/themes/luci-theme-argon/ucode/template/themes/argon/footer.ut
-mv $GITHUB_WORKSPACE/patch/xy/footer_login.ut feeds/luci/themes/luci-theme-argon/ucode/template/themes/argon/footer_login.ut
-mv $GITHUB_WORKSPACE/patch/xy/997-mac2.sh package/base-files/files/etc/uci-defaults/997-mac2.sh
-mv $GITHUB_WORKSPACE/patch/xy/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+
 IPQ_TARGET=$(grep -o 'CONFIG_TARGET_qualcommax_[^=]*' .config | sed -n 's/CONFIG_TARGET_qualcommax_//p' | head -n1)
 
 rm -rf .vermagic
@@ -13,6 +10,13 @@ else
     mv $GITHUB_WORKSPACE/vm/vikingyfy-$IPQ_TARGET vermagic
 	mv $GITHUB_WORKSPACE/patch/998-$IPQ_TARGET.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
 fi
+
+mv $GITHUB_WORKSPACE/patch/xy/footer.ut feeds/luci/themes/luci-theme-argon/ucode/template/themes/argon/footer.ut
+mv $GITHUB_WORKSPACE/patch/xy/footer_login.ut feeds/luci/themes/luci-theme-argon/ucode/template/themes/argon/footer_login.ut
+mv $GITHUB_WORKSPACE/patch/xy/997-mac2.sh package/base-files/files/etc/uci-defaults/997-mac2.sh
+mv $GITHUB_WORKSPACE/patch/xy/10_system.js feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+mv $GITHUB_WORKSPACE/patch/xy/998-istore.sh package/base-files/files/etc/uci-defaults/998-ipq.sh
+
 
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
