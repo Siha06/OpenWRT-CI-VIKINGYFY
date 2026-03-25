@@ -46,6 +46,7 @@ git clone --depth 1 https://github.com/nikkinikki-org/OpenWrt-momo.git package/O
 git clone --depth 1 https://github.com/nikkinikki-org/OpenWrt-nikki.git package/OpenWrt-nikki
 git clone --depth 1 https://github.com/fw876/helloworld.git package/helloworld-ssr-plus
 git clone --depth 1 https://github.com/gdy666/luci-app-lucky.git package/lucky
+git clone --depth 1 https://github.com/SunBK201/UA3F.git package/UA3F
 
 rm -rf feeds/packages/net/{open-app-filter}
 git clone --depth 1 https://github.com/sbwml/luci-app-openlist2 package/openlist2
