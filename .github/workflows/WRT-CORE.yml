@@ -162,6 +162,8 @@ jobs:
         run: |
           cd ./wrt/
 
+          git checkout 033e44b
+
           sed -i '1i src-git passwall_packages https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git' feeds.conf.default
 
           ./scripts/feeds update -a
