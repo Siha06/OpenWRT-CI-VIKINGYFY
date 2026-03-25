@@ -50,6 +50,13 @@ git clone --depth 1 https://github.com/SunBK201/UA3F.git package/UA3F
 
 rm -rf feeds/packages/net/{open-app-filter}
 git clone --depth 1 https://github.com/sbwml/luci-app-openlist2 package/openlist2
+# iStore
+git clone --depth=1 -b main https://github.com/linkease/istore.git package/istore
+git clone --depth=1 -b master https://github.com/linkease/nas-packages.git package/nas-packages
+git clone --depth=1 -b main https://github.com/linkease/nas-packages-luci.git package/nas-luci
+mv package/nas-packages/network/services/* package/nas-packages/
+rm -rf package/nas-packages/network
+
 
 sed -i '129d' include/kernel-defaults.mk
 sed -i '129i\\tcp $(TOPDIR)/vermagic $(LINUX_DIR)/.vermagic' include/kernel-defaults.mk
